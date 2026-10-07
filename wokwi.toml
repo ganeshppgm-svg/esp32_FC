@@ -1,0 +1,7 @@
+[wokwi]
+version = 1
+firmware = '.pio\build\esp32-s3-devkitc-1\firmware.elf'
+elf = '.pio\build\esp32-s3-devkitc-1\firmware.elf'
+
+# Starts a virtual network serial port on port 4000
+rfc2217ServerPort = 4000

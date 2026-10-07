@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "author": "mpucode",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-s3-devkitc-1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-mpu6050", "id": "imu1", "top": 176.62, "left": 155.92, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:3V3.1", "imu1:VCC", "green", [ "v-0.18", "h-53.08", "v-57.6", "h268.8" ] ],
+    [ "esp:GND.1", "imu1:GND", "black", [ "h-33.88", "v95.82", "h240" ] ],
+    [ "esp:9", "imu1:SCL", "green", [ "h-62.68", "v201.42", "h-9.6" ] ],
+    [ "esp:8", "imu1:SDA", "green", [ "h0" ] ]
+  ],
+  "dependencies": {}
+}
