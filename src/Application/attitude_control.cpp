@@ -20,8 +20,7 @@ void updatePID_roll(float setpoint, float currentRollAngle) {
     // 1. Proportional Term
     float p_term = (float)KP_ROLL * error;
     
-    // 2. Derivative Term (Measurement derivative with correct damping sign)
-    // Subtracted (-) to act as a damper against rapid angular changes
+    // 2. Derivative Term 
     float d_term = (float)KD_ROLL * (currentRollAngle - RollAngle_prev) / DT;
 
     // 3. Calculate tentative output to check for saturation
@@ -61,8 +60,7 @@ void updatePID_altitude(float setpoint, float currentAltitude){
     // 1. Proportional Term
     float p_term = (float)KP_ALTITUDE * error;
     
-    // 2. Derivative Term (Measurement derivative with correct damping sign)
-    // Subtracted (-) to act as a damper against rapid angular changes
+    // 2. Derivative Term 
     float d_term = (float)KD_ALTITUDE * (currentAltitude - Altitude_prev) / DT;
 
     // 3. Calculate tentative output to check for saturation
@@ -145,8 +143,7 @@ void updatePID_yaw(float setpoint, float currentYawAngle){
     // 1. Proportional Term
     float p_term = (float)KP_YAW * error;
     
-    // 2. Derivative Term (Measurement derivative with correct damping sign)
-    // Subtracted (-) to act as a damper against rapid angular changes
+    // 2. Derivative Term 
     float d_term = (float)KD_YAW * (currentYawAngle - YawAngle_prev) / DT;
 
     // 3. Calculate tentative output to check for saturation
@@ -180,6 +177,7 @@ void updatePID_yaw(float setpoint, float currentYawAngle){
 
 }
 
+// Getter functions to access the thrust values
 float getThrust(){
     return thrust_applied.thrust;
 }

@@ -13,6 +13,8 @@ const float mixing_matrix[6][4] = {
 //   T ,   R   ,  P  , Y
 };
 
+
+//update motor commands based on the thrust, roll, pitch and yaw inputs
 void update_motor_commands(float thrust ,float roll ,float pitch ,float yaw){
 
     float max = FLT_MIN;
@@ -37,6 +39,7 @@ void update_motor_commands(float thrust ,float roll ,float pitch ,float yaw){
 
 }
 
+//getter functions to access the motor commands
 float getESCm1(){
     return esc_commands[0];
 }

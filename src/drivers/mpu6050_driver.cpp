@@ -21,10 +21,10 @@ void MpuInit(){
   }
   Serial.println("MPU6050 Found!");
 
-  // Set accelerometer range (Options: MPU6050_RANGE_2_G, MPU6050_RANGE_4_G, MPU6050_RANGE_8_G, MPU6050_RANGE_16_G)
+  // Set accelerometer range 
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
 
-  // Set gyroscope range (Options: MPU6050_RANGE_250_DEG, MPU6050_RANGE_500_DEG, MPU6050_RANGE_1000_DEG, MPU6050_RANGE_2000_DEG)
+  // Set gyroscope range 
   mpu.setGyroRange(MPU6050_RANGE_2000_DEG);
 
   // Set filter bandwidth
@@ -40,6 +40,7 @@ void MpuCalibration(){
 
   Serial.println("Calibrating MPU6050; keep the sensor level and still.");
 
+  //collect multiple samples to calculate average offsets for accelerometer and gyroscope
   for (uint16_t sample = 0; sample < calibration_samples; ++sample) {
     sensors_event_t a, g, temp;
     mpu.getEvent(&a, &g, &temp);
@@ -53,7 +54,8 @@ void MpuCalibration(){
     delay(2);
   }
 
-  const float sample_count = static_cast<float>(calibration_samples);
+  //update the offsets
+  const float sample_count = (float)(calibration_samples);
   sensor_offsets.accelX = totals.accelX / sample_count;
   sensor_offsets.accelY = totals.accelY / sample_count;
   sensor_offsets.accelZ = totals.accelZ / sample_count - gravity;
@@ -77,10 +79,12 @@ void updateSensorData(){
   att.gyroZ = g.gyro.z - sensor_offsets.gyroZ;
 }
 
+// Getter function to access the sensor data
 AccGyro_t getSensorData(){
     return att;
 }
 
+// Function to print the sensor data to Serial Monitor
 void printSensorData(){
     // Print Accelerometer data (m/s^2)
   Serial.print("Accel X: "); Serial.print(att.accelX);

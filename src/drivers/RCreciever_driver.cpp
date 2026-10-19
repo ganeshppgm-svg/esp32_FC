@@ -49,18 +49,18 @@ void IRAM_ATTR handleYaw() {
 
 static float getNormalizedValue(uint32_t min_range, uint32_t max_range ,uint32_t value){
 
-    // Prevent division by zero if the range is flat
+    // Prevent division by zero
     if (max_range - min_range == 0)
     {
         return 0.0f; 
     }
 
-    // Calculate the normalized percentage ,Cast to float BEFORE dividing to preserve decimal precision
+    // Calculate the normalized percentage 
     return ((float)(value - min_range) / (float)(max_range - min_range)) * 100.0f;
 }
 
 void rx_setup(){
-    // Configure pins as inputs with internal pull-downs (or floating depending on receiver)
+    // Configure pins as inputs with internal pull-downs 
   pinMode(THROTTLE_PIN, INPUT_PULLDOWN);
   pinMode(ROLL_PIN, INPUT_PULLDOWN);
   pinMode(PITCH_PIN, INPUT_PULLDOWN);
@@ -75,6 +75,7 @@ void rx_setup(){
 
 void updateRCCMD()
 {
+    // Normalize the pulse widths to a percentage of the range
     float thrN = getNormalizedValue(MINIMUM_PULSE_WIDTH , MAXIMUM_PULSE_WIDTH , throttlePulse);
     float rollN = getNormalizedValue(MINIMUM_PULSE_WIDTH , MAXIMUM_PULSE_WIDTH , rollPulse);
     float pitchN = getNormalizedValue(MINIMUM_PULSE_WIDTH , MAXIMUM_PULSE_WIDTH , pitchPulse);
@@ -87,22 +88,19 @@ void updateRCCMD()
     cmd.yaw = (yawN * (float)MAX_YAW)/100.0f;
 }
 
+// Getter functions to access the RC command values
 float getThrottleCMD(){
-    // updateRCCMD();
      return cmd.throttle;
 }
 
 float getRollCMD(){
-   // updateRCCMD();
     return cmd.roll;
 }
 
 float getPitchCMD(){
-  //  updateRCCMD();
     return cmd.pitch;
 }
 
 float getYawCMD(){
-  //  updateRCCMD();
     return cmd.yaw;
 }

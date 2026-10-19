@@ -53,8 +53,9 @@ void updateRawMagData(){
     Wire.requestFrom(HMC5883L_ADDR, 6);
     
     if (Wire.available() == 6) {
+        // register order is X, Z, Y
         int16_t raw_x = (Wire.read() << 8) | Wire.read();
-        int16_t raw_z = (Wire.read() << 8) | Wire.read(); // Note: HMC5883L register order is X, Z, Y
+        int16_t raw_z = (Wire.read() << 8) | Wire.read(); 
         int16_t raw_y = (Wire.read() << 8) | Wire.read();
     
         rawMagData.magX = (float)raw_x;
@@ -109,8 +110,8 @@ void applyCalibration() {
     calibratedMagData.magZ = (rawMagData.magZ - magCalibration.offsetZ) * magCalibration.scaleZ;
 }
 
+//implementation for heading calculation using calibrated magnetometer data
 float getHeading() {
-    // Implementation for heading calculation
 
     updateRawMagData();
     applyCalibration();

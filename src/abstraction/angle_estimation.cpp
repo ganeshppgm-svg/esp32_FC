@@ -38,7 +38,7 @@ void updateAttitude(){
     const float gyro_pitch = sensor.gyroY * radians_to_degrees;
     const float gyro_yaw = sensor.gyroZ * radians_to_degrees;
 
-    // Establish a gravity-based starting orientation before integrating gyro rates.
+    // initialize the angles on the first run
     if (!initialized) {
         current_att.rollangle = accel_roll;
         current_att.pitchangle = accel_pitch;
@@ -52,12 +52,14 @@ void updateAttitude(){
     current_att.pitchangle = gyro_weight * (current_att.pitchangle + gyro_pitch * dt)
         + accel_weight * accel_pitch;
     
+    //update yaw angle by combining gyro and magnetometer heading
     float mag_heading = getHeading();
     float gyroyaw = current_att.yawangle + gyro_yaw * dt;
     float yaw_error = wrapAngle180(mag_heading - gyroyaw);
     current_att.yawangle = gyroyaw + mag_weight * yaw_error;
 }
 
+// Getter functions to access the current attitude angles
 float getRollAngle(){
     return current_att.rollangle;
 }

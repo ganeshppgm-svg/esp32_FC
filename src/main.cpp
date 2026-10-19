@@ -9,7 +9,7 @@
 #include "logging/data_log.h"
 
 unsigned long previousMicros = 0;
-const unsigned long intervalMicros = 1000; // 1000 microseconds = 1 millisecond
+const unsigned long intervalMicros = 1000; // 1 millisecond
 bool armed = false;
 
 void setup(void) {
@@ -36,9 +36,9 @@ void loop() {
   void updateRCCMD();
 
   float throttle = getThrottleCMD();
-  float roll     = getRollCMD(); 
-  float pitch    = getPitchCMD();
-  float yaw      = getYawCMD();
+  float roll     = getRollCMD()*MAX_ROLL; 
+  float pitch    = getPitchCMD()*MAX_PITCH;
+  float yaw      = getYawCMD()*MAX_YAW;
 
   if((throttle == 0.0f) && !armed){
     armed = true;

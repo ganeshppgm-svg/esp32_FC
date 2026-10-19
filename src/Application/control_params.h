@@ -18,7 +18,7 @@
 #define KI_ALTITUDE 0U
 #define KD_ALTITUDE 0U
 
-#define DT 2
+#define DT 0.001f // 1 millisecond control loop
 
 #define MAX_ROLL_THR 0U
 #define MAX_PITCH_THR 0U

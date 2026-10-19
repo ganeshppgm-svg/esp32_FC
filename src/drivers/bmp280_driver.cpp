@@ -10,14 +10,15 @@ void bmpsetup(){
     while (1);
   }
 
-  // Configure sensor settings for weather monitoring
-  bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode */
-                  Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
-                  Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
-                  Adafruit_BMP280::FILTER_X16,      /* Filtering */
-                  Adafruit_BMP280::STANDBY_MS_500); /* Standby time */
+  // Configure sensor settings
+  bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     
+                  Adafruit_BMP280::SAMPLING_X2,    
+                  Adafruit_BMP280::SAMPLING_X16,    
+                  Adafruit_BMP280::FILTER_X16,     
+                  Adafruit_BMP280::STANDBY_MS_500); 
 }
 
+// getter function to read altitude
 float getAltitude(){
     return bmp.readAltitude(SEALIGHT_PRESSURE_HPA);
 }

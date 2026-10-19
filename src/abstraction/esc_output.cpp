@@ -2,6 +2,7 @@
 
 Servo xrotorESC[6];
 
+// setup of esc throttle pins
 void setupESC(){
     xrotorESC[0].attach(ESC1, MAX_PULSE_WIDTH_ESC, MIN_PULSE_WIDTH_ESC); 
     xrotorESC[1].attach(ESC2, MAX_PULSE_WIDTH_ESC, MIN_PULSE_WIDTH_ESC); 
@@ -11,6 +12,7 @@ void setupESC(){
     xrotorESC[5].attach(ESC6, MAX_PULSE_WIDTH_ESC, MIN_PULSE_WIDTH_ESC); 
 }
 
+//update the PWM duty cycles for the ESCs
 void sendESC(float m1 ,
              float m2,
              float m3,
