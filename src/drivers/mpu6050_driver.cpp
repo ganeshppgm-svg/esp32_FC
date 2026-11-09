@@ -8,7 +8,7 @@ TwoWire I2C_MPU = TwoWire(0);
 
 void MpuInit(){
      // Initialize I2C with the designated pins and a 100kHz clock speed
-  I2C_MPU.begin(I2C_SDA, I2C_SCL, 100000);
+  I2C_MPU.begin(MPU_I2C_SDA, MPU_I2C_SCL, 100000);
 
   Serial.println("Initializing MPU6050 on ESP32-S3...");
 

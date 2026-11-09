@@ -1,0 +1,34 @@
+fc_sil_node:
+  ros__parameters:
+    use_sim_time: true
+
+    max_motor_speed_rad_s: 800.0
+    rc_timeout_s: 0.50
+    imu_timeout_s: 0.10
+    mag_timeout_s: 0.25
+
+    max_roll_deg: 25.0
+    max_pitch_deg: 25.0
+    max_yaw_rate_deg_s: 120.0
+    attitude_filter_tau_s: 0.50
+    motor_idle_fraction: 0.04
+    throttle_cutoff: 0.02
+
+    # Starting values only. They are not validated for any real airframe.
+    roll_kp: 0.012
+    roll_ki: 0.00015
+    roll_kd: 0.0020
+    roll_output_limit: 0.20
+    roll_integral_limit: 100.0
+
+    pitch_kp: 0.012
+    pitch_ki: 0.00015
+    pitch_kd: 0.0020
+    pitch_output_limit: 0.20
+    pitch_integral_limit: 100.0
+
+    yaw_rate_kp: 0.0020
+    yaw_rate_ki: 0.00005
+    yaw_rate_kd: 0.0
+    yaw_rate_output_limit: 0.15
+    yaw_rate_integral_limit: 500.0

@@ -1,0 +1,11 @@
+{
+  "name": "flight_core",
+  "version": "0.1.0",
+  "description": "Hardware-independent ESP32 flight-controller algorithms shared by PlatformIO and ROS 2 SIL",
+  "frameworks": "*",
+  "platforms": "*",
+  "build": {
+    "srcDir": "src",
+    "includeDir": "include"
+  }
+}

@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="hexacopter">
+    <static>false</static>
+    <self_collide>false</self_collide>
+
+    <link name="base_link">
+      <inertial>
+        <mass>1.0</mass>
+        <inertia>
+          <ixx>0.025</ixx>
+          <iyy>0.025</iyy>
+          <izz>0.045</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="body_collision">
+        <geometry><box><size>0.22 0.18 0.07</size></box></geometry>
+      </collision>
+      <visual name="body_visual">
+        <geometry><box><size>0.22 0.18 0.07</size></box></geometry>
+        <material>
+          <ambient>0.12 0.18 0.28 1</ambient>
+          <diffuse>0.12 0.18 0.28 1</diffuse>
+        </material>
+      </visual>
+      <!-- Three crossed arms connect opposing motor stations. -->
+      <visual name="arm_front_rear">
+        <pose>0 0 0.015 0 0 0</pose>
+        <geometry><box><size>0.64 0.025 0.02</size></box></geometry>
+        <material><ambient>0.28 0.28 0.30 1</ambient><diffuse>0.28 0.28 0.30 1</diffuse></material>
+      </visual>
+      <visual name="arm_diagonal_left">
+        <pose>0 0 0.015 0 0 1.04719755</pose>
+        <geometry><box><size>0.64 0.025 0.02</size></box></geometry>
+        <material><ambient>0.28 0.28 0.30 1</ambient><diffuse>0.28 0.28 0.30 1</diffuse></material>
+      </visual>
+      <visual name="arm_diagonal_right">
+        <pose>0 0 0.015 0 0 -1.04719755</pose>
+        <geometry><box><size>0.64 0.025 0.02</size></box></geometry>
+        <material><ambient>0.28 0.28 0.30 1</ambient><diffuse>0.28 0.28 0.30 1</diffuse></material>
+      </visual>
+
+      <!-- IMU and magnetometer axes are aligned with the FC body FLU frame. -->
+      <sensor name="fc_imu" type="imu">
+        <pose>0 0 0 0 0 0</pose>
+        <always_on>true</always_on>
+        <update_rate>400</update_rate>
+        <visualize>false</visualize>
+        <topic>/fc/imu</topic>
+      </sensor>
+      <sensor name="fc_magnetometer" type="magnetometer">
+        <pose>0 0 0 0 0 0</pose>
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <visualize>false</visualize>
+        <topic>/fc/mag</topic>
+      </sensor>
+    </link>
+
+    <!-- Six rotor positions match the repository mixer:
+         0=(+1,0), 1=(+0.5,-0.866), 2=(-0.5,-0.866),
+         3=(-1,0), 4=(-0.5,+0.866), 5=(+0.5,+0.866). -->
+    <link name="rotor_0">
+      <pose relative_to="base_link">0.32 0.0 0.055 0 0 0</pose>
+      <inertial><mass>0.005</mass><inertia><ixx>0.00001</ixx><iyy>0.00001</iyy><izz>0.00002</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+      <gravity>false</gravity>
+      <visual name="rotor_0_visual"><geometry><cylinder><radius>0.105</radius><length>0.006</length></cylinder></geometry><material><ambient>0.1 0.7 0.2 0.7</ambient><diffuse>0.1 0.7 0.2 0.7</diffuse></material></visual>
+    </link>
+    <joint name="rotor_0_joint" type="revolute"><pose relative_to="base_link">0.32 0.0 0.055 0 0 0</pose><parent>base_link</parent><child>rotor_0</child><axis><xyz>0 0 1</xyz><limit><lower>-1e16</lower><upper>1e16</upper></limit><use_parent_model_frame>true</use_parent_model_frame></axis></joint>
+
+    <link name="rotor_1">
+      <pose relative_to="base_link">0.16 -0.277 0.055 0 0 0</pose>
+      <inertial><mass>0.005</mass><inertia><ixx>0.00001</ixx><iyy>0.00001</iyy><izz>0.00002</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+      <gravity>false</gravity>
+      <visual name="rotor_1_visual"><geometry><cylinder><radius>0.105</radius><length>0.006</length></cylinder></geometry><material><ambient>0.1 0.3 0.8 0.7</ambient><diffuse>0.1 0.3 0.8 0.7</diffuse></material></visual>
+    </link>
+    <joint name="rotor_1_joint" type="revolute"><pose relative_to="base_link">0.16 -0.277 0.055 0 0 0</pose><parent>base_link</parent><child>rotor_1</child><axis><xyz>0 0 1</xyz><limit><lower>-1e16</lower><upper>1e16</upper></limit><use_parent_model_frame>true</use_parent_model_frame></axis></joint>
+
+    <link name="rotor_2">
+      <pose relative_to="base_link">-0.16 -0.277 0.055 0 0 0</pose>
+      <inertial><mass>0.005</mass><inertia><ixx>0.00001</ixx><iyy>0.00001</iyy><izz>0.00002</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+      <gravity>false</gravity>
+      <visual name="rotor_2_visual"><geometry><cylinder><radius>0.105</radius><length>0.006</length></cylinder></geometry><material><ambient>0.1 0.3 0.8 0.7</ambient><diffuse>0.1 0.3 0.8 0.7</diffuse></material></visual>
+    </link>
+    <joint name="rotor_2_joint" type="revolute"><pose relative_to="base_link">-0.16 -0.277 0.055 0 0 0</pose><parent>base_link</parent><child>rotor_2</child><axis><xyz>0 0 1</xyz><limit><lower>-1e16</lower><upper>1e16</upper></limit><use_parent_model_frame>true</use_parent_model_frame></axis></joint>
+
+    <link name="rotor_3">
+      <pose relative_to="base_link">-0.32 0.0 0.055 0 0 0</pose>
+      <inertial><mass>0.005</mass><inertia><ixx>0.00001</ixx><iyy>0.00001</iyy><izz>0.00002</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+      <gravity>false</gravity>
+      <visual name="rotor_3_visual"><geometry><cylinder><radius>0.105</radius><length>0.006</length></cylinder></geometry><material><ambient>0.1 0.7 0.2 0.7</ambient><diffuse>0.1 0.7 0.2 0.7</diffuse></material></visual>
+    </link>
+    <joint name="rotor_3_joint" type="revolute"><pose relative_to="base_link">-0.32 0.0 0.055 0 0 0</pose><parent>base_link</parent><child>rotor_3</child><axis><xyz>0 0 1</xyz><limit><lower>-1e16</lower><upper>1e16</upper></limit><use_parent_model_frame>true</use_parent_model_frame></axis></joint>
+
+    <link name="rotor_4">
+      <pose relative_to="base_link">-0.16 0.277 0.055 0 0 0</pose>
+      <inertial><mass>0.005</mass><inertia><ixx>0.00001</ixx><iyy>0.00001</iyy><izz>0.00002</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+      <gravity>false</gravity>
+      <visual name="rotor_4_visual"><geometry><cylinder><radius>0.105</radius><length>0.006</length></cylinder></geometry><material><ambient>0.1 0.3 0.8 0.7</ambient><diffuse>0.1 0.3 0.8 0.7</diffuse></material></visual>
+    </link>
+    <joint name="rotor_4_joint" type="revolute"><pose relative_to="base_link">-0.16 0.277 0.055 0 0 0</pose><parent>base_link</parent><child>rotor_4</child><axis><xyz>0 0 1</xyz><limit><lower>-1e16</lower><upper>1e16</upper></limit><use_parent_model_frame>true</use_parent_model_frame></axis></joint>
+
+    <link name="rotor_5">
+      <pose relative_to="base_link">0.16 0.277 0.055 0 0 0</pose>
+      <inertial><mass>0.005</mass><inertia><ixx>0.00001</ixx><iyy>0.00001</iyy><izz>0.00002</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia></inertial>
+      <gravity>false</gravity>
+      <visual name="rotor_5_visual"><geometry><cylinder><radius>0.105</radius><length>0.006</length></cylinder></geometry><material><ambient>0.1 0.3 0.8 0.7</ambient><diffuse>0.1 0.3 0.8 0.7</diffuse></material></visual>
+    </link>
+    <joint name="rotor_5_joint" type="revolute"><pose relative_to="base_link">0.16 0.277 0.055 0 0 0</pose><parent>base_link</parent><child>rotor_5</child><axis><xyz>0 0 1</xyz><limit><lower>-1e16</lower><upper>1e16</upper></limit><use_parent_model_frame>true</use_parent_model_frame></axis></joint>
+
+    <!-- Motor direction alternates to match the yaw signs in motor_mixing.cpp. -->
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>FC_HEX</robotNamespace><jointName>rotor_0_joint</jointName><linkName>rotor_0</linkName><turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp><timeConstantDown>0.025</timeConstantDown><maxRotVelocity>800.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant><momentConstant>0.016</momentConstant><commandSubTopic>gazebo/command/motor_speed</commandSubTopic><motorNumber>0</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient><rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim><motorType>velocity</motorType>
+    </plugin>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>FC_HEX</robotNamespace><jointName>rotor_1_joint</jointName><linkName>rotor_1</linkName><turningDirection>cw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp><timeConstantDown>0.025</timeConstantDown><maxRotVelocity>800.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant><momentConstant>0.016</momentConstant><commandSubTopic>gazebo/command/motor_speed</commandSubTopic><motorNumber>1</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient><rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim><motorType>velocity</motorType>
+    </plugin>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>FC_HEX</robotNamespace><jointName>rotor_2_joint</jointName><linkName>rotor_2</linkName><turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp><timeConstantDown>0.025</timeConstantDown><maxRotVelocity>800.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant><momentConstant>0.016</momentConstant><commandSubTopic>gazebo/command/motor_speed</commandSubTopic><motorNumber>2</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient><rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim><motorType>velocity</motorType>
+    </plugin>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>FC_HEX</robotNamespace><jointName>rotor_3_joint</jointName><linkName>rotor_3</linkName><turningDirection>cw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp><timeConstantDown>0.025</timeConstantDown><maxRotVelocity>800.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant><momentConstant>0.016</momentConstant><commandSubTopic>gazebo/command/motor_speed</commandSubTopic><motorNumber>3</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient><rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim><motorType>velocity</motorType>
+    </plugin>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>FC_HEX</robotNamespace><jointName>rotor_4_joint</jointName><linkName>rotor_4</linkName><turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp><timeConstantDown>0.025</timeConstantDown><maxRotVelocity>800.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant><momentConstant>0.016</momentConstant><commandSubTopic>gazebo/command/motor_speed</commandSubTopic><motorNumber>4</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient><rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim><motorType>velocity</motorType>
+    </plugin>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <robotNamespace>FC_HEX</robotNamespace><jointName>rotor_5_joint</jointName><linkName>rotor_5</linkName><turningDirection>cw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp><timeConstantDown>0.025</timeConstantDown><maxRotVelocity>800.0</maxRotVelocity>
+      <motorConstant>8.54858e-06</motorConstant><momentConstant>0.016</momentConstant><commandSubTopic>gazebo/command/motor_speed</commandSubTopic><motorNumber>5</motorNumber>
+      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient><rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim><motorType>velocity</motorType>
+    </plugin>
+  </model>
+</sdf>
