@@ -33,12 +33,12 @@ void loop() {
 
     previousMicros += intervalMicros;
 
-  void updateRCCMD();
+updateRCCMD();
 
   float throttle = getThrottleCMD();
-  float roll     = getRollCMD()*MAX_ROLL; 
-  float pitch    = getPitchCMD()*MAX_PITCH;
-  float yaw      = getYawCMD()*MAX_YAW;
+  float roll     = getRollCMD(); 
+  float pitch    = getPitchCMD();
+  float yaw      = getYawCMD();
 
   if((throttle == 0.0f) && !armed){
     armed = true;
@@ -77,6 +77,8 @@ void loop() {
     sendESC(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
   }
 
+  sendESC(esc1, esc2, esc3,
+        esc4, esc5, esc6);
   // --- Pack and Send Data to Queue Non-Blocking ---
   DataLog_t logItem = {
         .roll = rollAngle,

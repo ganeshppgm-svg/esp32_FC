@@ -82,7 +82,7 @@ void updateRCCMD()
     float yawN = getNormalizedValue(MINIMUM_PULSE_WIDTH , MAXIMUM_PULSE_WIDTH , yawPulse);
 
     //update the commanded throttle and angles of roll , pitch , yaw
-    cmd.throttle = thrN;
+    cmd.throttle = thrN/100.0f; // Normalize to 0.0 - 1.0 range
     cmd.roll = (rollN * (float)MAX_ROLL)/100.0f;
     cmd.pitch = (pitchN * (float)MAX_PITCH)/100.0f;
     cmd.yaw = (yawN * (float)MAX_YAW)/100.0f;
